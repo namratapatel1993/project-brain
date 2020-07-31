@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class PostForm {
     private String id;
+    private String citeId;
     private String title;
     private String context;
     private String content;

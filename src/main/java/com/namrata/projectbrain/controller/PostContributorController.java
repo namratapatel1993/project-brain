@@ -32,6 +32,7 @@ public class PostContributorController {
             Contributor contributor = contributorRepository.findContributorByUsername(postForm.getUsername()).orElse(new Contributor());
 
             Post post = new Post();
+            post.setCiteId(postForm.getCiteId());
             post.setTitle(postForm.getTitle());
             post.setContext(postForm.getContext());
             post.setContent(postForm.getContent());
@@ -59,6 +60,7 @@ public class PostContributorController {
     public String removeOne(@RequestParam Long id) {
         Post post = postRepository.findById(id).orElse(new Post());
         post.getCreator().getPosts().remove(post);
+        //post.getCreator().getTodos().remove(post);
         post.setCreator(null);
 
         postRepository.save(post);

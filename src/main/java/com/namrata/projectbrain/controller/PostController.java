@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
 import com.namrata.projectbrain.form.PostResponseForm;
 import com.namrata.projectbrain.model.Post;
@@ -26,6 +26,25 @@ public class PostController {
         PostResponseForm responseForm = new PostResponseForm();
         try {
             responseForm.setData(new HashSet<>(postRepository.findAll()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseForm.setData(new HashSet<Post>());
+        }
+        return responseForm;
+    }
+
+    @GetMapping(value = "/post/{title}/posts")
+    public PostResponseForm getIdeasByTitle(@PathVariable String title) {
+        PostResponseForm responseForm = new PostResponseForm();
+        try {
+            Set<Post> ideasByTitle = postRepository.findPostByTitleContainingIgnoreCase(title);
+
+            if(ideasByTitle == null) {
+                responseForm.setData(new HashSet<>());
+            } else {
+                responseForm.setData(ideasByTitle);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
             responseForm.setData(new HashSet<Post>());

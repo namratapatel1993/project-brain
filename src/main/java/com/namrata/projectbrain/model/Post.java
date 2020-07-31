@@ -14,6 +14,9 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(unique = false, nullable = true)
+    private String citeId;
+
     @Column(unique = false, nullable = false)
     private String title;
 
